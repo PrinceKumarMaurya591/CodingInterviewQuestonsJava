@@ -1,35 +1,31 @@
 package org.example.string;
 
+//rotataion
 import java.util.Arrays;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 public class Rough {
 
-      public static String  rmdublicate(String st) {
-    	int tail=1;
-    	char[] str=st.toCharArray();
-    	int n=str.length;
-    	for(int i=1;i<n;i++) {
-    		int j;
-    		for(j=0;j<tail;j++) {
-    			if(str[i]==str[j]) {
-    				break;
-    			
-    			}}
-    			if(j==tail) {
-    				str[tail]=str[i];
-    				tail++;
-    			
-    		}
+     public static void main(String[] args) {
+    	 String str1 = "Hello, Hello, Hello, World!";
+         String target = "Hello";
+
+    	 System.out.println(palidrom(str1,target));
+     }
+     public static int palidrom(String str1,String target) {
+    	int startindex=0;
+    	int count=0;
+    	while(startindex<str1.length()) {
+    		int index=str1.indexOf(target,startindex);
+    		if(index!=0) {
+    			count++;
+    			startindex=index+target.length();
+    		}else break;
     	}
-    	return new String(str,0,tail);
-       }
-       
-        public static void main(String[] args) {
-           String st="princece";
-        
-            System.out.println("String with duplicates removed: " + rmdublicate(st));
-        }
+    	return count;
+     
+     }
     }
 
 
