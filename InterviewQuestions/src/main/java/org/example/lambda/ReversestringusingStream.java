@@ -9,20 +9,30 @@ public class ReversestringusingStream {
 
 		String reversedNames = Arrays.stream(names)
 
-				.map(name -> {
-					String[] words = name.split("\\s+");
-					StringBuilder reversedWord = new StringBuilder();
-					for (String word : words) {
-						reversedWord.append(new StringBuilder(word).reverse().append(" "));
-					}
-					return reversedWord.toString().trim();
-				})
+//				.map(name -> {
+//					String[] words = name.split("\\s+");
+//					StringBuilder reversedWord = new StringBuilder();
+//					for (String word : words) {
+//						reversedWord.append(new StringBuilder(word).reverse().append(" "));
+//					}
+//					return reversedWord.toString().trim();
+//				})
+//
+//				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
+//					java.util.Collections.reverse(list);
+//					return list.stream().collect(Collectors.joining(", "));
+//				}));
+		
+		 
+	                .map(name -> {
+	                    StringBuilder reversedWord = new StringBuilder(name).reverse();
+	                    return reversedWord.toString();
+	                })
+	                .collect(Collectors.joining(", "));
 
-				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
-					java.util.Collections.reverse(list);
-					return list.stream().collect(Collectors.joining(", "));
-				}));
+	        System.out.println(reversedNames);
+	    }
+		
+		
 
-		System.out.println(reversedNames);
-	}
 }
