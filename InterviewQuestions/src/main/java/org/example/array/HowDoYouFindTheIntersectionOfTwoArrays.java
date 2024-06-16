@@ -29,8 +29,8 @@ public class HowDoYouFindTheIntersectionOfTwoArrays {
     }
 
     public static void main(String[] args) {
-        int[] nums1 = {1, 2, 2, 1,3};
-        int[] nums2 = {2, 2};
+        int[] nums1 = {1, 2, 3, 4,5};
+        int[] nums2 = {2, 3, 4};
         int[] intersection = findIntersection(nums1, nums2);
         System.out.print("Intersection: ");
         for (int num : intersection) {
