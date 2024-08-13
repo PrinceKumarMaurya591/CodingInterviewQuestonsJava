@@ -1,3 +1,3 @@
 My name is Prince Kumar Maurya,hold a B.Tech degree in Computer Scienc in 2022 from Chandigarh Group of College.I  have more than 2 years of experience as an associate software engineer.
-Currently, I am working as a full stack developer at a small finance bank, where I am responsible for designing, developing, and maintaining robust and scalable applications.  
-My strong technical foundation, combined with practical experience in full stack development, allows me to contribute effectively to both front-end and back-end projects.
+Currently, I am working as au full stack developer at a small finance bank, where I am responsible for designing, developing, and maintaining robust and scalable applications.  
+My strong technical foundation, combined with practical experience in full stack development using spring boot and react js, allows me to contribute effectively to both front-end and back-end projects.
