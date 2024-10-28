@@ -42,7 +42,7 @@ public class BinaryTree {
         System.out.println("Printing heightOfBinaryTree: "+heightOfBinaryTree(root)+"\n"); 
         System.out.println("Printing sizeOfBinaryTree: "+sizeOfBinaryTree(root)+"\n");
         System.out.println("Printing maxInBinaryTree: "+maxInBinaryTree(root)+"\n");
-        System.out.println("Nodes at distance " + 2 + ":");
+        System.out.println("Nodes at distance " + 3 + ":");
         printNodesAtKDistance(root,3);
     }
 
