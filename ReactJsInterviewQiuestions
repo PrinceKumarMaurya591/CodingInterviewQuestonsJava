@@ -1,0 +1,107 @@
+React components have different lifecycles depending on whether they are class components or functional components. 
+In functional components, React provides Hooks like useEffect to manage lifecycle behavior.
+
+Functional components in React use Hooks to manage state and lifecycle behavior. The useEffect hook is the main hook used to simulate class component lifecycle methods.
+
+Mounting Phase:
+
+useEffect() with an empty dependency array []:
+This mimics componentDidMount() in class components and runs only once, right after the component mounts.
+Example:
+useEffect(() => {
+  console.log('Component mounted');
+}, []); // Runs once after the initial render
+Updating Phase:
+
+useEffect() with dependencies:
+
+This mimics componentDidUpdate() in class components and runs when the specified dependencies change.
+Example:
+useEffect(() => {
+  console.log('Count updated:', count);
+}, [count]); // Runs whenever "count" changes
+useEffect() without a dependency array:
+
+This runs on every render, mimicking componentDidUpdate() for every update.
+Example:
+useEffect(() => {
+  console.log('Component updated');
+}); // Runs on every render
+Unmounting Phase:
+
+useEffect() with a cleanup function:
+This mimics componentWillUnmount() in class components. The return function inside useEffect is the cleanup function, which runs when the component unmounts.
+Example:
+useEffect(() => {
+  const timer = setTimeout(() => {
+    console.log('Timer triggered');
+  }, 1000);
+
+  // Cleanup function (mimics componentWillUnmount)
+  return () => {
+    clearTimeout(timer);
+    console.log('Component unmounted');
+  };
+}, []); // Runs once and cleans up when unmounted
+
+
+What are components in React?
+
+Components are the building blocks of a React application. They allow developers to create reusable UI elements and manage their state.
+What is the difference between functional and class components?
+
+Class Components: State is managed in the class component, and lifecycle methods are available.
+Functional Components: Introduced in React 16.8, they are stateless and do not have lifecycle methods. However, with hooks, they can manage state and lifecycle.
+
+
+What are props in React?
+
+Props (short for "properties") are inputs to components that allow passing data between components. Props are immutable within a component.
+What is state in React?
+
+State is an object that represents the dynamic data or properties of a component. When the state changes, React re-renders the component to reflect the changes.
+
+What is the Virtual DOM?
+
+The Virtual DOM is a lightweight representation of the actual DOM. React creates a virtual DOM to optimize and minimize direct DOM manipulations by only updating the parts of the DOM that have changed.
+
+What are React hooks?
+
+React Hooks are functions that allow functional components to manage state, side effects, and other features that were previously available only in class components.
+
+What is a controlled component?
+
+A controlled component is an input element (like a form input) whose value is controlled by React state. It ensures that React is the source of truth for the input's state.
+What is an uncontrolled component?
+
+An uncontrolled component is a form element whose value is handled by the DOM rather than by React state.
+What are keys in React?
+
+Keys are unique identifiers used in lists of elements to help React identify which items have changed, been added, or removed, thereby optimizing re-renders.
+What is the purpose of React Router?
+
+React Router is a library used to implement routing in React applications. It allows for navigation between different components without reloading the page.
+
+What is Context API in React?
+
+The Context API allows you to pass data through the component tree without passing props manually at every level. It is useful for global state management.
+
+Explain higher-order components (HOC).
+
+A Higher-Order Component (HOC) is a pattern in React where a function takes a component and returns a new component with enhanced functionality, such as adding additional props or logic.
+
+What are Pure Components?
+
+Pure Components are a subclass of React components that automatically optimize re-renders by implementing shouldComponentUpdate() with a shallow prop and state comparison.
+What is Redux?
+
+Redux is a predictable state container for JavaScript apps. It helps manage application state centrally, making state changes predictable and easier to debug.
+
+What is the purpose of React.StrictMode?
+React.StrictMode is a wrapper component used in development mode to highlight potential problems in an application, such as unsafe lifecycle methods, deprecated APIs, and side effects in render.
+
+How do you handle large forms in React?
+For large forms, you can:
+Use libraries like Formik or React Hook Form to handle form validation and state management.
+Use useReducer for better control of form states.
+Optimize form components with React.memo to avoid unnecessary re-renders.
