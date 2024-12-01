@@ -8,39 +8,29 @@ import java.util.Map;
 public class HowDoYouFindTheFrequencyOfEachElementInAnArray {
 
 
-	  public static String removeDuplicates(String strin) {
-          if (strin == null || strin.length() == 0) {
-              return null;
-          }
+	 public static void main(String[] args) {
+        // Example array
+        int[] arr = {4, 3, 2, 4, 1, 2, 3, 4, 1, 2};
 
-          char[] str=strin.toCharArray();
-          
-          int length = str.length;
-//We initialize variables: `length` to store the length of the string and `tail` to keep track of the position where the next unique character should be placed.
-          
-          int tail = 1;
+        // Call the method to find the frequency of each element
+        findFrequency(arr);
+    }
 
-          for (int i = 1; i < length; i++) {
-              int j;
-              for (j = 0; j < tail; j++) {
-                  if (str[i] == str[j]) {
-                      break;
-                  }
-              }
-//If the inner loop completes without finding a duplicate, we copy the character to position `tail` and increment `tail`.
-              if (j == tail) {
-                  str[tail] = str[i];
-                  tail++;
-              }
-          }
+    // Method to find the frequency of each element in the array
+    public static void findFrequency(int[] arr) {
+        // Create a HashMap to store the frequency of each element
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
 
-          return new String(str,0,tail);
-      }
+        // Loop through the array and update the frequency in the map
+        for (int num : arr) {
+            // If the number is already in the map, increment its count
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+        }
 
-      public static void main(String[] args) {
-          String str = "Hello World";
-         
-          System.out.println("String with duplicates removed: " +  removeDuplicates(str));
-      }
+        // Print the frequency of each element
+        for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
+            System.out.println("Element: " + entry.getKey() + " - Frequency: " + entry.getValue());
+        }
+    }
   
     }
