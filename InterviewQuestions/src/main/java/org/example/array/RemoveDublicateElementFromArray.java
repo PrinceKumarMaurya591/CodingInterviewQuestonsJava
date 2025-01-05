@@ -27,3 +27,58 @@ public class RemoveDublicateElementFromArray {
 	
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.Arrays;
+import java.util.HashSet;
+
+public class RemoveDuplicates {
+    public static void main(String[] args) {
+        int[] array = {1, 2, 2, 3, 4, 4, 5};
+
+        // Convert the array to a HashSet to remove duplicates
+        HashSet<Integer> set = new HashSet<>();
+        for (int num : array) {
+            set.add(num);
+        }
+
+        // Convert the HashSet back to an array
+        Integer[] uniqueArray = set.toArray(new Integer[0]);
+
+        // Print the result
+        System.out.println(Arrays.toString(uniqueArray));
+    }
+}
+
+
+
+
+
+
+
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
+public class RemoveDuplicates {
+    public static void main(String[] args) {
+        int[] array = {1, 2, 2, 3, 4, 4, 5};
+
+        // Use IntStream to remove duplicates
+        int[] uniqueArray = Arrays.stream(array)
+                                   .distinct()  // Remove duplicates
+                                   .toArray();  // Convert back to array
+
+        // Print the result
+        System.out.println(Arrays.toString(uniqueArray));
+    }
+}
