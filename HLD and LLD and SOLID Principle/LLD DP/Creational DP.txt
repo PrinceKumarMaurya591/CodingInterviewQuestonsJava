@@ -1,0 +1,167 @@
+List of Creational Design Patterns (with Brief Summary)
+Pattern	Description	Example Use Case
+1. Singleton	Ensures a class has only one instance and provides a global point of access.	Logging, Configuration, DB connection pool
+2. Factory Method	Defines an interface for creating objects, but lets subclasses alter the type of objects that will be created.	Creating different types of shapes or notifications
+3. Abstract Factory	Produces families of related or dependent objects without specifying their concrete classes.	UI toolkits for different OS (Windows, macOS, Linux)
+4. Builder	Separates the construction of a complex object from its representation.	Building complex User or Order objects
+5. Prototype	Creates new objects by copying an existing object (cloning).	When object creation is costly and you want to reuse existing objects
+
+Singleton Pattern
+📌 Goal:
+Ensure a class has only one instance and provide a global point of access.
+
+✅ Steps:
+Make the constructor private.
+
+Create a private static instance variable.
+
+Provide a public static method to return the instance.
+
+Use lazy or eager initialization.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+class Singleton {
+    private static Singleton instance = null; // step 2
+
+    private Singleton() {} // step 1
+
+    public static Singleton getInstance() { // step 3
+        if (instance == null) {
+            instance = new Singleton(); // create instance once
+        }
+        return instance;
+    }
+}
+✅ 2. Factory Method Pattern
+📌 Goal:
+Define an interface for creating objects, but let subclasses decide which class to instantiate.
+
+✅ Steps:
+Create a common interface or superclass.
+
+Implement multiple subclasses for different types.
+
+Create a factory class or method that returns the object based on input.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Product {
+    void use();
+}
+
+class ProductA implements Product { public void use() { ... } }
+class ProductB implements Product { public void use() { ... } }
+
+class ProductFactory {
+    Product createProduct(String type) {
+        if (type == "A") return new ProductA();
+        if (type == "B") return new ProductB();
+        return null;
+    }
+}
+✅ 3. Abstract Factory Pattern
+📌 Goal:
+Create families of related or dependent objects without specifying their concrete classes.
+
+✅ Steps:
+Define abstract interfaces for each type of object (e.g., Button, Checkbox).
+
+Create concrete implementations for different families (e.g., Windows, Mac).
+
+Create abstract factory interface to return products.
+
+Create concrete factories that implement the abstract factory.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Button { void paint(); }
+class WinButton implements Button { public void paint() { ... } }
+class MacButton implements Button { public void paint() { ... } }
+
+interface GUIFactory {
+    Button createButton();
+}
+
+class WinFactory implements GUIFactory {
+    public Button createButton() { return new WinButton(); }
+}
+
+class MacFactory implements GUIFactory {
+    public Button createButton() { return new MacButton(); }
+}
+✅ 4. Builder Pattern
+📌 Goal:
+Separate the construction of a complex object from its representation.
+
+✅ Steps:
+Create a class with many optional parameters.
+
+Create a static nested Builder class.
+
+Copy required and optional fields to Builder.
+
+Add chainable methods for setting fields.
+
+Add a build() method that returns the main object.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+class User {
+    private String name, email;
+    private int age;
+
+    private User(UserBuilder builder) {
+        this.name = builder.name;
+        this.email = builder.email;
+        this.age = builder.age;
+    }
+
+    static class UserBuilder {
+        private String name, email;
+        private int age;
+
+        public UserBuilder(String name, String email) { ... }
+        public UserBuilder age(int age) { this.age = age; return this; }
+        public User build() { return new User(this); }
+    }
+}
+✅ 5. Prototype Pattern
+📌 Goal:
+Clone existing objects instead of creating new ones from scratch.
+
+✅ Steps:
+Implement a cloneable interface or define a clone() method.
+
+Perform deep or shallow copy based on need.
+
+Use the cloned object as a new instance.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+class Document implements Cloneable {
+    String content;
+
+    public Document clone() {
+        Document copy = new Document();
+        copy.content = this.content;
+        return copy;
+    }
+}
+🧠 Summary Table
+Pattern	Key Technique	Main Use Case
+Singleton	Static instance + private constructor	One global object
+Factory Method	Switch/if to create instance	One of many types
+Abstract Factory	Factory of factories	Families of objects
+Builder	Nested class, chaining setters	Complex object construction
+Prototype	Clone an existing object	Expensive creation, reuse

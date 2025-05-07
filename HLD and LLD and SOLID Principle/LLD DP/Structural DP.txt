@@ -1,0 +1,253 @@
+List of Structural Design Patterns (with Steps, Pseudocode, Use Case)
+Pattern	Purpose
+1. Adapter	Convert one interface into another expected by the client.
+2. Bridge	Separate abstraction from implementation for flexibility.
+3. Composite	Treat individual objects and groups uniformly (tree structures).
+4. Decorator	Add responsibilities to objects dynamically.
+5. Facade	Provide a unified interface to a set of subsystems.
+6. Flyweight	Share objects to support large numbers efficiently.
+7. Proxy	Provide a placeholder or surrogate to control access.
+
+✅ 1. Adapter Pattern
+📌 Goal:
+Match interfaces that are incompatible.
+
+✅ Steps:
+Create the target interface expected by the client.
+
+Create the adaptee class with a different interface.
+
+Create an adapter class that implements the target interface and internally uses the adaptee.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Target {
+    void request();
+}
+
+class Adaptee {
+    void specificRequest() { ... }
+}
+
+class Adapter implements Target {
+    private Adaptee adaptee;
+
+    public Adapter(Adaptee adaptee) { this.adaptee = adaptee; }
+
+    public void request() {
+        adaptee.specificRequest(); // convert call
+    }
+}
+✅ 2. Bridge Pattern
+📌 Goal:
+Decouple abstraction from implementation.
+
+✅ Steps:
+Define abstraction and implementation interfaces.
+
+Implement concrete classes of both.
+
+Bridge abstraction class delegates to the implementation.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Device {
+    void turnOn();
+}
+
+class TV implements Device {
+    public void turnOn() { ... }
+}
+
+abstract class Remote {
+    protected Device device;
+
+    Remote(Device device) { this.device = device; }
+
+    abstract void pressButton();
+}
+
+class AdvancedRemote extends Remote {
+    void pressButton() {
+        device.turnOn(); // bridge the call
+    }
+}
+✅ 3. Composite Pattern
+📌 Goal:
+Treat individual objects and compositions uniformly.
+
+✅ Steps:
+Create a component interface.
+
+Implement leaf and composite classes.
+
+Composite class manages child components.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Component {
+    void showDetails();
+}
+
+class Leaf implements Component {
+    public void showDetails() { ... }
+}
+
+class Composite implements Component {
+    private List<Component> children = new ArrayList<>();
+
+    void add(Component c) { children.add(c); }
+
+    public void showDetails() {
+        for (Component c : children) c.showDetails();
+    }
+}
+✅ 4. Decorator Pattern
+📌 Goal:
+Add responsibilities dynamically without modifying original class.
+
+✅ Steps:
+Create a component interface.
+
+Implement concrete component.
+
+Create abstract decorator that wraps the component.
+
+Add concrete decorators that extend functionality.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Coffee {
+    String getDescription();
+    double getCost();
+}
+
+class SimpleCoffee implements Coffee {
+    public String getDescription() { return "Simple Coffee"; }
+    public double getCost() { return 5; }
+}
+
+class MilkDecorator implements Coffee {
+    private Coffee coffee;
+    public MilkDecorator(Coffee c) { this.coffee = c; }
+
+    public String getDescription() {
+        return coffee.getDescription() + ", Milk";
+    }
+
+    public double getCost() {
+        return coffee.getCost() + 1.5;
+    }
+}
+✅ 5. Facade Pattern
+📌 Goal:
+Simplify usage of a complex system by providing a single interface.
+
+✅ Steps:
+Identify complex subsystems.
+
+Create a Facade class that wraps and delegates to them.
+
+Client uses the facade instead of subsystems directly.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+class CPU { void start() { ... } }
+class Memory { void load() { ... } }
+class Disk { void read() { ... } }
+
+class ComputerFacade {
+    private CPU cpu = new CPU();
+    private Memory memory = new Memory();
+    private Disk disk = new Disk();
+
+    void startComputer() {
+        cpu.start();
+        memory.load();
+        disk.read();
+    }
+}
+✅ 6. Flyweight Pattern
+📌 Goal:
+Minimize memory by sharing as much data as possible.
+
+✅ Steps:
+Create a shared object class.
+
+Create a factory to manage instances.
+
+Reuse objects with same data instead of creating new.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+class Circle {
+    private String color; // intrinsic (shared)
+    private int x, y, radius; // extrinsic
+
+    public void draw() { ... }
+}
+
+class CircleFactory {
+    private Map<String, Circle> circleMap = new HashMap<>();
+
+    public Circle getCircle(String color) {
+        if (!circleMap.containsKey(color)) {
+            circleMap.put(color, new Circle(color));
+        }
+        return circleMap.get(color);
+    }
+}
+✅ 7. Proxy Pattern
+📌 Goal:
+Provide a placeholder for another object to control access.
+
+✅ Steps:
+Define a subject interface.
+
+Create the real object.
+
+Create the proxy object that controls access to the real one.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Service {
+    void request();
+}
+
+class RealService implements Service {
+    public void request() { ... }
+}
+
+class ProxyService implements Service {
+    private RealService realService;
+
+    public void request() {
+        if (realService == null)
+            realService = new RealService();
+        // control access, log, cache, etc.
+        realService.request();
+    }
+}
+✅ Summary Table
+Pattern	Key Idea	Use Case
+Adapter	Convert interface	Legacy system integration
+Bridge	Separate abstraction & implementation	Multiple dimensions of variation
+Composite	Tree structure	GUI menus, file system
+Decorator	Add features dynamically	Adding toppings to a pizza
+Facade	Simplify complex subsystem	Library APIs, startup/shutdown code
+Flyweight	Share object state	Rendering 1,000+ similar objects
+Proxy	Control access	Security, lazy loading, logging
