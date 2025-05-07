@@ -1,0 +1,191 @@
+Core Java Questions
+
+JDK (Java Development Kit)	It includes JRE + development tools (compiler, debugger, etc.) to develop Java applications.
+JRE (Java Runtime Environment)	It includes JVM + libraries required to run Java applications.
+JVM (Java Virtual Machine)	It is a virtual machine that executes Java bytecode, making Java platform-independent.
+
+
+1. What is the difference between == and .equals() in Java?
+Answer:
+
+== checks for reference equality, i.e., whether two objects point to the same memory location.
+
+.equals() checks for value equality, i.e., whether two objects have the same content.
+
+For example:
+
+java
+Copy
+String s1 = new String("hello");
+String s2 = new String("hello");
+System.out.println(s1 == s2); // false (different references)
+System.out.println(s1.equals(s2)); // true (same content)
+
+Explain the difference between String, StringBuilder, and StringBuffer.
+Answer:
+
+String: Immutable, thread-safe, but inefficient for frequent modifications.
+
+StringBuilder: Mutable, not thread-safe, and efficient for frequent modifications.
+
+StringBuffer: Mutable, thread-safe (synchronized), and efficient for frequent modifications.
+
+Use StringBuilder for single-threaded environments and StringBuffer for multi-threaded environments.
+
+String s = "Hello";
+s.concat(" World"); // Immutable, doesn't change original string
+
+StringBuffer sb = new StringBuffer("Hello");
+sb.append(" World"); // Mutable, modifies original string
+
+
+4. What is the difference between final, finally, and finalize?
+Answer:
+Keyword	Description
+final	Used to declare constants, prevent method overriding, or prevent inheritance.
+finally	A block that executes after try-catch, whether an exception occurs or not.
+finalize()	A method called by Garbage Collector before destroying an object.
+
+What are checked and unchecked exceptions in Java?
+Answer:
+Type	Description	Example
+Checked Exception	Checked at compile-time, must be handled using try-catch or throws.	IOException, SQLException
+Unchecked Exception	Occurs at runtime, caused by logical errors.	NullPointerException, ArithmeticException
+Example:
+java
+Copy
+Edit
+// Checked Exception (must be handled)
+try {
+    FileReader file = new FileReader("file.txt");  
+} catch (FileNotFoundException e) {
+    System.out.println("File not found");
+}
+
+// Unchecked Exception (occurs at runtime)
+int a = 5 / 0; // Throws ArithmeticException
+
+
+
+
+3. What is the difference between ArrayList and LinkedList?
+Answer:
+
+ArrayList: Backed by a dynamic array, provides fast random access (O(1)), but slower insertions/deletions (O(n)) in the middle.
+
+LinkedList: Backed by a doubly-linked list, provides fast insertions/deletions (O(1)), but slower random access (O(n)).
+
+Use ArrayList for frequent read operations and LinkedList for frequent modifications.
+
+4. What is the final keyword in Java?
+Answer:
+
+final can be applied to variables, methods, and classes.
+
+Variables: Cannot be reassigned once initialized.
+
+Methods: Cannot be overridden in subclasses.
+
+Classes: Cannot be extended (no subclasses allowed).
+
+
+Advanced Java Questions
+6. What is the difference between HashMap and ConcurrentHashMap?
+Answer:
+
+HashMap: Not thread-safe, allows one null key and multiple null values.
+
+ConcurrentHashMap: Thread-safe, does not allow null keys or values, and provides better performance in multi-threaded environments by dividing the map into segments.
+
+9. What is the difference between HashMap and Hashtable?
+Answer:
+Feature	HashMap	Hashtable
+Synchronization	Not synchronized (not thread-safe)	Synchronized (thread-safe)
+Performance	Faster	Slower
+Allows null keys/values?	Yes, one null key and multiple null values	No null keys or values
+Example:
+java
+Copy
+Edit
+Map<Integer, String> hashMap = new HashMap<>();
+hashMap.put(null, "Value1");
+
+Map<Integer, String> hashTable = new Hashtable<>();
+hashTable.put(1, "Value2"); // No null keys allowed
+
+
+
+7- Internal working of hashmap and ConcurrentHashMap: 
+
+
+8:- What is the difference between Comparable and Comparator?
+Answer:
+Feature	Comparable	Comparator
+Package	java.lang	java.util
+Usage	Used to define natural ordering inside the class.	Used for custom sorting outside the class.
+Method	compareTo()	compare()
+Example:
+java
+Copy
+Edit
+class Student implements Comparable<Student> {
+    int age;
+    Student(int age) { this.age = age; }
+    public int compareTo(Student s) { return this.age - s.age; } // Sort by age
+}
+
+// Comparator Example
+class AgeComparator implements Comparator<Student> {
+    public int compare(Student s1, Student s2) { return s2.age - s1.age; } // Descending order
+}
+
+
+
+
+What is the difference between wait() and sleep()?
+Answer:
+
+wait(): Releases the lock and waits for another thread to notify or interrupt. Part of the Object class.
+
+sleep(): Pauses the current thread for a specified time without releasing the lock. Part of the Thread class.
+
+
+What is the purpose of the volatile keyword?
+Answer:
+
+volatile ensures visibility of changes to variables across threads. It prevents thread caching and ensures that reads/writes are directly from/to main memory.
+
+However, it does not provide atomicity (use AtomicInteger or synchronized for atomic operations).
+
+
+What is the difference between CompletableFuture and Future?
+Answer:
+
+Future: Represents the result of an asynchronous computation. Limited functionality (e.g., no chaining or combining).
+
+CompletableFuture: Extends Future and provides more advanced features like chaining, combining, and exception handling.
+
+5. What are the principles of OOP?
+Answer:
+
+Encapsulation: Bundling data and methods that operate on the data within a single unit (class).
+
+Inheritance: Creating new classes from existing ones to promote code reuse.
+
+Polymorphism: Ability of an object to take many forms (e.g., method overriding and overloading).
+
+Abstraction: Hiding implementation details and exposing only necessary features.
+
+
+
+ How do you optimize the performance of a Java application?
+Answer:
+
+Use profiling tools (e.g., JProfiler, YourKit) to identify bottlenecks.
+
+Optimize database queries and use caching (e.g., Redis, Ehcache).
+
+Use efficient data structures and algorithms.
+
+Minimize object creation and garbage collection overhead.
+
