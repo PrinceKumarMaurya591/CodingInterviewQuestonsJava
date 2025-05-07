@@ -1,0 +1,299 @@
+Behavioral Design Patterns — Steps, Pseudocode, and Use Cases
+Pattern	Purpose
+1. Chain of Responsibility	Pass request along a chain of handlers
+2. Command	Encapsulate a request as an object
+3. Interpreter	Interpret sentences in a language
+4. Iterator	Sequentially access elements without exposing structure
+5. Mediator	Reduce communication complexity by centralizing control
+6. Memento	Capture and restore an object’s internal state
+7. Observer	Notify dependent objects automatically when state changes
+8. State	Change behavior based on internal state
+9. Strategy	Define a family of interchangeable algorithms
+10. Template Method	Define skeleton of an algorithm and defer steps to subclasses
+11. Visitor	Add operations to objects without changing the classes themselves
+
+✅ 1. Chain of Responsibility
+Use Case: Logging levels, event handling, authentication chain
+
+✅ Steps:
+Define a Handler interface with setNext() and handle().
+
+Implement concrete handlers.
+
+Set the chain and invoke handle().
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Handler {
+    void setNext(Handler next);
+    void handle(String request);
+}
+
+class AuthHandler implements Handler {
+    private Handler next;
+    public void setNext(Handler h) { this.next = h; }
+    public void handle(String req) {
+        if (req.equals("auth")) { ... }
+        else if (next != null) next.handle(req);
+    }
+}
+✅ 2. Command
+Use Case: Undo/Redo, GUI button actions
+
+✅ Steps:
+Create Command interface with execute().
+
+Implement concrete commands.
+
+Create an Invoker that calls the command.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Command { void execute(); }
+
+class LightOnCommand implements Command {
+    Light light;
+    public LightOnCommand(Light l) { this.light = l; }
+    public void execute() { light.on(); }
+}
+
+class RemoteControl {
+    Command slot;
+    public void setCommand(Command cmd) { this.slot = cmd; }
+    public void pressButton() { slot.execute(); }
+}
+✅ 3. Interpreter
+Use Case: SQL, regex, or domain-specific languages
+
+✅ Steps:
+Define Expression interface with interpret().
+
+Implement rules as classes.
+
+Parse input into expression tree and interpret.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Expression {
+    boolean interpret(String context);
+}
+
+class TerminalExpression implements Expression {
+    String data;
+    TerminalExpression(String data) { this.data = data; }
+    public boolean interpret(String context) {
+        return context.contains(data);
+    }
+}
+✅ 4. Iterator
+Use Case: Custom collection traversal
+
+✅ Steps:
+Create Iterator interface.
+
+Implement collection and its iterator.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Iterator<T> {
+    boolean hasNext();
+    T next();
+}
+
+class NameIterator implements Iterator<String> {
+    String[] names;
+    int index;
+    public boolean hasNext() { return index < names.length; }
+    public String next() { return names[index++]; }
+}
+✅ 5. Mediator
+Use Case: Chat room, air traffic control
+
+✅ Steps:
+Create Mediator interface.
+
+Define Colleague class with reference to mediator.
+
+Delegate all communication via the mediator.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Mediator {
+    void send(String msg, Colleague sender);
+}
+
+class ChatRoom implements Mediator {
+    List<Colleague> users;
+    public void send(String msg, Colleague sender) {
+        for (Colleague c : users)
+            if (c != sender) c.receive(msg);
+    }
+}
+✅ 6. Memento
+Use Case: Undo system, versioning
+
+✅ Steps:
+Create Memento class storing state.
+
+Originator can create and restore memento.
+
+Caretaker stores mementos.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+class Memento {
+    private String state;
+    public Memento(String s) { this.state = s; }
+    public String getState() { return state; }
+}
+
+class Originator {
+    private String state;
+    public void set(String s) { state = s; }
+    public Memento save() { return new Memento(state); }
+    public void restore(Memento m) { state = m.getState(); }
+}
+✅ 7. Observer
+Use Case: News feeds, event listeners
+
+✅ Steps:
+Create Subject with register(), remove(), and notify().
+
+Create Observer interface.
+
+Implement update mechanism.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Observer { void update(String msg); }
+
+class Subject {
+    List<Observer> observers = new ArrayList<>();
+    void register(Observer o) { observers.add(o); }
+    void notifyAll(String msg) {
+        for (Observer o : observers) o.update(msg);
+    }
+}
+✅ 8. State
+Use Case: Vending machine, TCP connection states
+
+✅ Steps:
+Create State interface.
+
+Implement concrete states.
+
+Context delegates to current state.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface State { void handle(); }
+
+class OnState implements State {
+    public void handle() { System.out.println("ON"); }
+}
+
+class Context {
+    private State state;
+    void setState(State s) { state = s; }
+    void request() { state.handle(); }
+}
+✅ 9. Strategy
+Use Case: Payment methods, sorting algorithms
+
+✅ Steps:
+Define Strategy interface.
+
+Create concrete strategies.
+
+Context uses selected strategy.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Strategy {
+    int operate(int a, int b);
+}
+
+class Add implements Strategy {
+    public int operate(int a, int b) { return a + b; }
+}
+
+class Context {
+    Strategy strategy;
+    public void setStrategy(Strategy s) { strategy = s; }
+    public int execute(int a, int b) { return strategy.operate(a, b); }
+}
+✅ 10. Template Method
+Use Case: Task workflow with steps, report generation
+
+✅ Steps:
+Define an abstract class with a templateMethod().
+
+Implement steps in subclasses.
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+abstract class Task {
+    public final void execute() {
+        step1();
+        step2();
+    }
+
+    abstract void step1();
+    abstract void step2();
+}
+✅ 11. Visitor
+Use Case: Operations on object structures (like AST, compilers)
+
+✅ Steps:
+Create Visitor interface.
+
+Create Element interface with accept().
+
+Elements call visit(this).
+
+🔢 Pseudocode:
+java
+Copy
+Edit
+interface Visitor { void visit(Book b); }
+
+interface Element {
+    void accept(Visitor v);
+}
+
+class Book implements Element {
+    void accept(Visitor v) { v.visit(this); }
+}
+✅ Summary Table
+Pattern	Use Case / Purpose
+Chain of Responsibility	Processing pipeline
+Command	Parameterizing actions
+Interpreter	Custom language parsing
+Iterator	Custom collection traversal
+Mediator	Central controller for object communication
+Memento	Undo, restore states
+Observer	Event notification system
+State	Vary behavior by state
+Strategy	Replaceable algorithms
+Template Method	Skeleton of algorithm
+Visitor	Add functionality without modifying structure
