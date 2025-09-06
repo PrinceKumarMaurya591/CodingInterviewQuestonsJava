@@ -1,0 +1,42 @@
+public class MaximumProductSubarray {
+
+//दो variables बनाएँ: maxEndingHere और minEndingHere जो वर्तमान subarray के max और min product को track करेंगे।
+//एक variable maxSoFar बनाएँ जो अब तक मिला maximum product रखेगा।
+//array को left से right traverse करें:
+//यदि current element negative है तो maxEndingHere और minEndingHere को swap कर दें क्योंकि negative से max और min flip हो सकते हैं।
+//maxEndingHere को update करें: यह current element या maxEndingHere * current element में से बड़ा होगा।
+//minEndingHere को update करें: यह current element या minEndingHere * current element में से छोटा होगा।
+//maxSoFar को maxEndingHere और उसके पहले के maxSoFar में से बड़ा लें।
+//अंत में maxSoFar ही answer होगा।
+//maxEndingHere और minEndingHere दोनों को track करना इसलिए जरूरी है क्योंकि negative number से max product min product में और min product max product में बदल सकता है।
+//हर step पर maxSoFar को update किया जाता है सबसे बड़े product को track करने के लिए।
+//ऐसा करने से हम O(n) समय में maximum product subarray निकाल सकते हैं।
+
+    public static int maxProduct(int[] nums) {
+        int maxEndingHere = nums[0];
+        int minEndingHere = nums[0];
+        int maxSoFar = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] < 0) {
+                // Swap max and min when multiplied by a negative number
+                int temp = maxEndingHere;
+                maxEndingHere = minEndingHere;
+                minEndingHere = temp;
+            }
+
+            maxEndingHere = Math.max(nums[i], maxEndingHere * nums[i]);
+            minEndingHere = Math.min(nums[i], minEndingHere * nums[i]);
+
+            maxSoFar = Math.max(maxSoFar, maxEndingHere);
+        }
+
+        return maxSoFar;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {2, 3, -2, 4};
+        System.out.println("Maximum product subarray is: " + maxProduct(arr));
+        // Output: 6
+    }
+}
