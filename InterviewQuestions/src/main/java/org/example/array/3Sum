@@ -1,0 +1,59 @@
+इस समस्या का efficient समाधान sorting और two-pointer तकनीक पर आधारित है।
+एल्गोरिदम (Algorithm)
+Array को sort करें।
+एक element को fix करें (i) और दो pointers left (i+1) और right (end) रखें।
+pointers का उपयोग करके sum = nums[i] + nums[left] + nums[right] निकालें।
+यदि sum = 0 हो, तो यह एक valid triplet है, उसे result में add करें।
+यदि sum < 0 हो, तो left pointer को आगे बढ़ाएँ ताकि sum बढ़े।
+यदि sum > 0 हो, तो right pointer को पीछे ले जाएँ ताकि sum घटे।
+Duplicate triplets से बचने के लिए loop में duplicates skip करें।
+i को आगे बढ़ाएं और यही प्रक्रिया दोहराएं।
+
+import java.util.*;
+
+public class ThreeSum {
+    public static List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue; // Skip duplicates for i
+            }
+
+            int left = i + 1, right = nums.length - 1;
+
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+
+                if (sum == 0) {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    left++;
+                    right--;
+
+                    // Skip duplicates for left
+                    while (left < right && nums[left] == nums[left - 1]) {
+                        left++;
+                    }
+                    // Skip duplicates for right
+                    while (left < right && nums[right] == nums[right + 1]) {
+                        right--;
+                    }
+                } else if (sum < 0) {
+                    left++;
+                } else { // sum > 0
+                    right--;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {-1, 0, 1, 2, -1, -4};
+        List<List<Integer>> triplets = threeSum(nums);
+        System.out.println(triplets);
+        // Output: [[-1, -1, 2], [-1, 0, 1]]
+    }
+}
