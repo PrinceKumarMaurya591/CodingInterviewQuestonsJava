@@ -1,0 +1,48 @@
+एल्गोरिदम (Algorithm)
+array के बीच की позиции (mid) को find करें।
+देखें कि mid के left half या right half में array sorted है।
+अगर left half sorted है, तो जांचें कि target उस left half में है या नहीं:
+अगर हाँ, तो search को left half में narrow करें।
+नहीं तो right half में जाएँ।
+अगर right half sorted है, तो वही जांच right half के लिए करें।
+इस प्रकार हर बार search space का आधा भाग हटता है, जिससे time complexity O(logn) होती है।
+
+public class SearchRotatedSortedArray {
+    public static int search(int[] arr, int target) {
+        int low = 0, high = arr.length - 1;
+        
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] == target)
+                return mid;
+
+            // Check if left half is sorted
+            if (arr[low] <= arr[mid]) {
+                // Target in left half?
+                if (arr[low] <= target && target < arr[mid])
+                    high = mid - 1;
+                else
+                    low = mid + 1;
+            } else {
+                // Right half is sorted
+                if (arr[mid] < target && target <= arr[high])
+                    low = mid + 1;
+                else
+                    high = mid - 1;
+            }
+        }
+
+        return -1;  // Element not found
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {16, 19, 21, 25, 3, 5, 8, 10};
+        int target = 5;
+        int result = search(arr, target);
+        if (result == -1) {
+            System.out.println("Element not found");
+        } else {
+            System.out.println("Element found at index " + result);
+        }
+    }
+}
