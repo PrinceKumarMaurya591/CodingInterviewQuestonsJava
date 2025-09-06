@@ -1,8 +1,12 @@
 package org.example.array;
 
 public class HowDoYouFindTheSecondLargestElementInAnArray {
-
-
+// दो variables बनाएं: largest और secondLargest। इन्हें सबसे छोटे मान यानी Integer.MIN_VALUE से इनिशियलाइज़ करें।
+// array के प्रत्येक element पर loop चलाएं:
+// अगर current element largest से बड़ा है, तो secondLargest को largest का मान दे दें और largest में current element का मान लगा दें।
+// नहीं तो अगर current element largest से छोटा है लेकिन secondLargest से बड़ा है, तो secondLargest में current element का मान दे दें।
+// loop पूरा होने के बाद, secondLargest में array का दूसरा सबसे बड़ा नंबर मिलेगा।
+            
             public static int findSecondLargest(int[] array) {
             int largest = Integer.MIN_VALUE; // Initialize largest as the minimum possible value
             int secondLargest = Integer.MIN_VALUE; // Initialize second largest as the minimum possible value
