@@ -32,6 +32,53 @@ public class FindTheLengthOfTheLongestSubstringWithoutRepeatingCharactersInAGive
         }
     }
 
+
+
+
+// Sliding Window एल्गोरिदम
+// दो pointers रखें: start और end जो substring की शुरुआत और अंत को दिखाएं।
+// एक HashMap  जो substring के character frequencies को track करे।
+// end pointer को string में आगे बढ़ाएं और आए character की frequency बढ़ाएं।
+// अगर किसी character की frequency 1 से ज्यादा हो, तो start pointer को बढ़ाएं और substring के शुरू से characters को हटाएं जब तक duplicate हट न जाए।
+// हर step पर substring का length निकालें और maximum length को update करें।
+
+import java.util.HashMap;
+
+public class Solution {
+    public String longestSubstringWithoutRepeatingCharacters(String s) {
+        int start = 0;   // current window start
+        int maxLength = 0;  // max substring length found
+        int maxStart = 0;   // start index of max substring
+        
+        HashMap<Character, Integer> map = new HashMap<>();
+        
+        for (int end = 0; end < s.length(); end++) {
+            char c = s.charAt(end);
+            if (map.containsKey(c)) {
+                // move start to max of current start or last index of this char +1
+                start = Math.max(map.get(c) + 1, start);
+            }
+            map.put(c, end);
+            
+            if (end - start + 1 > maxLength) {
+                maxLength = end - start + 1;
+                maxStart = start;
+            }
+        }
+        
+        // substring from maxStart with length maxLength
+        return s.substring(maxStart, maxStart + maxLength);
+    }
+    
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        String input = "abcabcbb";
+        System.out.println(sol.longestSubstringWithoutRepeatingCharacters(input));  // Output: "abc"
+    }
+}
+
+
+
     /*
 
     Certainly! Here's an example implementation in Java to find the length of the longest substring without repeating characters in a given string:
