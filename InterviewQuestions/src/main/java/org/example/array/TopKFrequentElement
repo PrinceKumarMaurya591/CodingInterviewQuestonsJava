@@ -1,0 +1,58 @@
+import java.util.*;
+
+//Top K Frequent Elements खोजने के लिए प्रभावी तरीका है:
+//HashMap में हर element की frequency गिनें।
+//Priority Queue (Min Heap) का उपयोग करके frequency के हिसाब से top k elements निकालें।
+
+public class Solution {
+    public static List<Integer> topKFrequent(int[] nums, int k) {
+        // Frequency map बनेगा element -> frequency
+        Map<Integer, Integer> freqMap = new HashMap<>();
+        for (int num : nums) {
+            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+        }
+
+        // Min Heap बनाएँ frequency के आधार पर
+        PriorityQueue<Integer> minHeap = 
+            new PriorityQueue<>((a, b) -> freqMap.get(a) - freqMap.get(b));
+
+        // Heap में elements डालें; अगर size > k हो जाए तो smallest frequency element हटाएं
+        for (int num : freqMap.keySet()) {
+            minHeap.offer(num);
+            if (minHeap.size() > k) {
+                minHeap.poll();
+            }
+        }
+
+        // Top k elements बाहर निकालें
+        List<Integer> result = new ArrayList<>();
+        while (!minHeap.isEmpty()) {
+            result.add(minHeap.poll());
+        }
+
+        // उपयुक्त order में लौटाएं (optional)
+        Collections.reverse(result);
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {3, 1, 4, 4, 5, 2, 6, 1};
+        int k = 2;
+        List<Integer> topK = topKFrequent(nums, k);
+        System.out.println(topK);  // Output: [4, 1]
+    }
+}
+
+
+कैसे काम करता है?
+HashMap में frequency गिनते हैं: {4=2,1=2,3=1,5=1,2=1,6=1}
+
+Min Heap में highest frequency वाले elements रखे जाते हैं, size k से अधिक हो तो lowest frequency हटाई जाती है।
+
+अंत में heap में top k frequent elements रहते हैं।
+
+टाइम और स्पेस कॉम्प्लेक्सिटी
+Time Complexity: 
+O(nlogk) जहां n array length
+Space Complexity: 
+O(n) frequency map के लिए
