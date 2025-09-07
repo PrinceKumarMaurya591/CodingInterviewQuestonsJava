@@ -1,1 +1,31 @@
+Linked List को reverse करने का सबसे efficient तरीका Iterative (तीन-pointer method) है, जिसमें हर node के next pointer को उल्टा करके पूरी list को पीछे से आगे बनाया जाता है।
+एल्गोरिदम (Iterative Approach)
+तीन pointers initialize करें: prev (NULL), current (head), और next (NULL)।
+जब तक current NULL न हो:
+next = current.next (आगे के node को save करें)
+current.next = prev (current node का pointer उल्टा करें)
+prev = current (prev को आगे बढ़ाएँ)
+current = next (current को आगे बढ़ाएँ)
+Loop के बाद, prev reversed list का नया head होगा।
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int val) { this.val = val; }
+}
+
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+
+        while (curr != null) {
+            ListNode nextTemp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextTemp;
+        }
+        return prev;
+    }
+}
 
