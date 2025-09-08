@@ -1,0 +1,22 @@
+public class LongestCommonPrefix { 
+public String longestCommonPrefix(String[] strs) {
+if (strs == null || strs.length == 0) {
+return ""; }
+
+String prefix = strs[0]; // Initialize with the first string 
+for (int i = 1; i < strs.length; i++) { 
+// While the current string does not start with the current prefix
+while (strs[i].indexOf(prefix) != 0) { 
+// Shorten the prefix by one character from the end 
+prefix = prefix.substring(0, prefix.length() - 1); 
+if (prefix.isEmpty()) { return ""; 
+// If prefix becomes empty, no common prefix exists } } }
+return prefix; }
+
+public static void main(String[] args) {
+LongestCommonPrefix solver = new LongestCommonPrefix();
+
+String[] example1 = {"flower", "flow", "flight"}; 
+System.out.println("Longest Common Prefix for {\"flower\", \"flow\", \"flight\"}: " + solver.longestCommonPrefix(example1)); 
+// Output: fl
+String[] example2 = {"dog", "racecar", "car"}; System.out.println("Longest Common Prefix for {\"dog\", \"racecar\", \"car\"}: " + solver.longestCommonPrefix(example2)); // Output: String[] example3 = {"apple", "apricot", "apply"}; System.out.println("Longest Common Prefix for {\"apple\", \"apricot\", \"apply\"}: " + solver.longestCommonPrefix(example3)); // Output: ap } }
