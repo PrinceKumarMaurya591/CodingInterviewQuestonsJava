@@ -1,22 +1,74 @@
-public class LongestCommonPrefix { 
-public String longestCommonPrefix(String[] strs) {
-if (strs == null || strs.length == 0) {
-return ""; }
+Algorithm (Longest Common Prefix)
+Input Check करना
 
-String prefix = strs[0]; // Initialize with the first string 
-for (int i = 1; i < strs.length; i++) { 
-// While the current string does not start with the current prefix
-while (strs[i].indexOf(prefix) != 0) { 
-// Shorten the prefix by one character from the end 
-prefix = prefix.substring(0, prefix.length() - 1); 
-if (prefix.isEmpty()) { return ""; 
-// If prefix becomes empty, no common prefix exists } } }
-return prefix; }
+अगर दिया हुआ array strs null है या उसकी length 0 है → return "" (खाली string)।
 
-public static void main(String[] args) {
-LongestCommonPrefix solver = new LongestCommonPrefix();
+Prefix Initialize करना
 
-String[] example1 = {"flower", "flow", "flight"}; 
-System.out.println("Longest Common Prefix for {\"flower\", \"flow\", \"flight\"}: " + solver.longestCommonPrefix(example1)); 
-// Output: fl
-String[] example2 = {"dog", "racecar", "car"}; System.out.println("Longest Common Prefix for {\"dog\", \"racecar\", \"car\"}: " + solver.longestCommonPrefix(example2)); // Output: String[] example3 = {"apple", "apricot", "apply"}; System.out.println("Longest Common Prefix for {\"apple\", \"apricot\", \"apply\"}: " + solver.longestCommonPrefix(example3)); // Output: ap } }
+prefix = strs यानी सबसे पहले string को prefix मान लो।
+
+बाकी Strings पर Loop चलाना
+
+i = 1 से लेकर end तक हर string compare करो।
+
+Check करना कि Current String उस Prefix से Start होती है या नहीं
+
+अगर strs[i].indexOf(prefix) != 0 है, मतलब वो prefix से start नहीं हो रही।
+
+तो prefix को 1 character छोटा कर दो (last character हटाकर)।
+
+यानी: prefix = prefix.substring(0, prefix.length() - 1)।
+
+Empty Check
+
+अगर prefix short होते-होते empty हो गया → return ""।
+
+Loop Complete होने पर
+
+finally जो बचा prefix वही longest common prefix होगा।
+
+
+public class LongestCommonPrefix {
+
+    // Method to find the longest common prefix among all strings
+    public String longestCommonPrefix(String[] strs) {
+        // Step 1: Edge case check
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+
+        // Step 2: Prefix ko pehle string se initialize karo
+        String prefix = strs;
+
+        // Step 3: Baaki saari strings ke saath prefix compare karo
+        for (int i = 1; i < strs.length; i++) {
+            // Jab tak current string prefix se start nahi hoti
+            while (strs[i].indexOf(prefix) != 0) {
+                // Prefix ko ek character kam karo (last character hata do)
+                prefix = prefix.substring(0, prefix.length() - 1);
+
+                // Agar prefix empty ho gaya, matlab koi common prefix nahi
+                if (prefix.isEmpty()) {
+                    return "";
+                }
+            }
+        }
+
+        // Last mein jo prefix bacha, wahi answer hai
+        return prefix;
+    }
+
+    // Main method for testing
+    public static void main(String[] args) {
+        LongestCommonPrefix solver = new LongestCommonPrefix();
+
+        String[] example1 = {"flower", "flow", "flight"};
+        System.out.println("Longest Common Prefix for {\"flower\", \"flow\", \"flight\"}: " + solver.longestCommonPrefix(example1)); // Output: fl
+
+        String[] example2 = {"dog", "racecar", "car"};
+        System.out.println("Longest Common Prefix for {\"dog\", \"racecar\", \"car\"}: " + solver.longestCommonPrefix(example2)); // Output: (empty string)
+
+        String[] example3 = {"apple", "apricot", "apply"};
+        System.out.println("Longest Common Prefix for {\"apple\", \"apricot\", \"apply\"}: " + solver.longestCommonPrefix(example3)); // Output: ap
+    }
+}
